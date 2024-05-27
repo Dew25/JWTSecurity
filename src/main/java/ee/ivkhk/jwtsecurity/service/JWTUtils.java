@@ -21,18 +21,18 @@ public class JWTUtils {
     private UserDetails userDetails;
 
     public JWTUtils() {
-        String secreteString = "534564564345090LWKJLVD-02K4FKSDWPSZMNCIIW45LKDIKLSKDFIUYPAKNCN0238KJNDKJFN;AJH;ALKSDNKJKJHDFGNUUISUIDNF";
+        String secreteString = "534564564345090LWKJLVD02K4FKSDWPSZMNCIIW45LKDIKLSKDFIUYPAKNCN0238KJNDKJFNAJHALKSDNKJKJHDFGNUUISUIDNF";
         byte[] keyBytes = Base64.getDecoder().decode(secreteString.getBytes(StandardCharsets.UTF_8));
         this.Key = new SecretKeySpec(keyBytes, "HmacSHA256");
     }
-    public String getnerateToken(UserDetails userDetails){
+    public String generateToken(UserDetails userDetails){
         return Jwts.builder()
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis()+EXPIRATION_TIME))
                 .signWith(Key)
                 .compact();
-    }public String getnerateRefreshToken(HashMap<String, Object> claims, UserDetails userDetails){
+    }public String generateRefreshToken(HashMap<String, Object> claims, UserDetails userDetails){
         return Jwts.builder()
                 .claims(claims)
                 .subject(userDetails.getUsername())
@@ -50,7 +50,7 @@ public class JWTUtils {
     }
     public boolean isTokenValid(String token, UserDetails userDetails){
         final String username = extractUsername(token);
-        return extractUsername(token).equals(userDetails.getUsername()) && !isTokenExpired(token));
+        return extractUsername(token).equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
     public boolean isTokenExpired(String token){
         return extractClaims(token, Claims::getExpiration).before(new Date());

@@ -2,6 +2,7 @@ package ee.ivkhk.jwtsecurity.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import ee.ivkhk.jwtsecurity.entity.OurUsers;
 import ee.ivkhk.jwtsecurity.entity.Product;
 import lombok.Data;
 
@@ -17,9 +18,10 @@ public class ReqRes {
     private String token;
     private String refreshToken;
     private String expirationTime;
+    private String name;
     private String email;
     private String role;
     private String password;
     private List<Product> products;
-    private String ourUsers;
+    private OurUsers ourUsers;
 }
